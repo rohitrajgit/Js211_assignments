@@ -1,0 +1,53 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="img" placeholder="image" id="image">
+    <input type="text" placeholder="productname" id="name">
+    <select  id="type">
+        <option value="nike">nike</option>
+        <option value="JARA">jara</option>
+        <option value="PUMA">puma</option>
+        <option value="JOCKEY">jockey</option>
+        <option value="DIXCY SCOTT">dixcy scott</option>
+    </select>
+    <button onclick="addproduct()">submit</button>
+</body>
+</html>
+
+<script>
+
+function getdata(img,p,t){
+    this.image=img;
+    this.productname=p;
+    this.type=t;
+}
+
+
+function addproduct(){
+    let image=document.getElementById("image").value;
+    let name=document.getElementById('name').value;
+    let type=document.getElementById('type').value;
+
+    let p1=new getdata(image,name,type);
+   
+    let data=JSON.parse(localStorage.getItem("products"))||[];
+    data.push(p1);
+
+    localStorage.setItem("products",JSON.stringify(data));
+    console.log(data)
+
+    window.location.href="inventory.html"
+}
+
+
+
+
+
+
+
+</script>

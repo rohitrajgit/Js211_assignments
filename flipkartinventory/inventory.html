@@ -1,0 +1,47 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>products</title>
+</head>
+<body>
+    <div><a href="admin.html">adminpage</a></div>
+    <div id="container"></div>
+</body>
+</html>
+
+<script>
+    let container=document.getElementById("container")
+    let data=JSON.parse(localStorage.getItem("products"))||[];
+    function adddata(arr){
+   
+        arr.forEach((el,index)=>{
+             let image=document.createElement("img")
+             image.src=el.image;
+             let name=document.createElement("p")
+             name.innerText=el.productname;
+             let type=document.createElement("p");
+             type.innerText=el.type;
+
+             let btn=document.createElement("button")
+             btn.innerText="Remove";
+             btn.addEventListener("click",function(){
+                remove(index)
+             })
+             let div=document.createElement("div")
+             div.append(image,name,type,btn)
+             container.append(div);
+         })
+    }
+
+    adddata(data);
+
+
+    function remove(index){
+    let data=JSON.parse(localStorage.getItem("products"))||[];
+    data.splice(index,1);
+    localStorage.setItem("products",JSON.stringify(data));
+    adddata(data);
+    }
+</script>
