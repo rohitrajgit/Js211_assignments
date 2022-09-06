@@ -1,0 +1,111 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #navbar{
+            display: flex;
+            height: 50px;
+            margin: auto;
+            align-items: center;
+            padding-left: 300px;
+            gap: 10px;
+            background-color: antiquewhite;
+        }
+        #navbar input{
+            padding: 5px 70px;
+            text-align: center;
+            border-radius: 5px;
+            font-weight: bolder;
+            background-color: #f3f2f1;
+            border: 1px solid black;
+        }
+        #navbar button{
+            padding: 5px 20px;
+            border-radius: 5px;
+            text-align: center;
+            border: transparent;
+            font-weight: bold;
+            background-color: #217867;
+            color: white;
+            cursor: pointer;
+        }
+
+        #container{
+          margin-top: 20px;
+          width: 20%;
+          gap: 40px;
+          color:#00baf2 ;
+
+        }
+        #container>div{
+            align-items: center;
+            padding: 20px;
+            box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        }
+        #container>div>button{
+           display: flex;
+           margin-bottom: 10px;
+           border-radius: 5px;
+           padding: 4px;
+           font-weight: bold;
+           color: #5b80e5;
+           background-color: beige;
+           
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar">
+        <input type="text" placeholder="task" id="addtask">
+        <button onclick="AddTask()">addtask</button>
+    </div>
+    <div id="container"></div>
+</body>
+</html>
+
+<script>
+let container=document.getElementById("container");
+function AddTask(){
+    let task=document.getElementById("addtask").value;
+
+    let getdata=JSON.parse(localStorage.getItem("task"))||[];
+    getdata.push(task);
+    localStorage.setItem("task",JSON.stringify(getdata));
+    console.log(getdata)
+}
+
+function appenddata(){
+    let getdata=JSON.parse(localStorage.getItem("task"))||[];
+
+    getdata.forEach((el,index)=>{
+        let taskadd=document.createElement("h2");
+        taskadd.innerText=el;
+        let btn2=document.createElement("button");
+        btn2.innerText="Add_task";
+        let btn=document.createElement("button")
+        btn.innerText="Remove";
+        btn.addEventListener("click",function(){
+            remove(index);
+        })
+        let div=document.createElement("div");
+        div.append(taskadd,btn2,btn);
+        container.append(div);
+    })
+}
+
+appenddata();
+
+function remove(index){
+    let getdata=JSON.parse(localStorage.getItem("task"))||[];
+    getdata.splice(index,1);
+
+    localStorage.setItem("task",JSON.stringify(getdata));
+
+    appenddata(getdata);
+
+}
+
+</script>

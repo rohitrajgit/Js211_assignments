@@ -29,9 +29,10 @@ let images=[
 
 ]
 
+
 let id;
 function slideshow(){
-    let i=images.length-1;
+    let i=0;
     let container=document.getElementById("container");
 
    id= setInterval(()=>{
@@ -42,7 +43,7 @@ function slideshow(){
         img.src=images[i];
         container.innerHTML=null;
         container.append(img);
-        i--;
+        i++;
         console.log(i)
     },1000)
 }
