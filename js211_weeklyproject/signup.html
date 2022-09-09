@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>signup</title>
 </head>
 <body>
     <input type="text" placeholder="Enter_name" id="name">
@@ -28,12 +28,13 @@ function userdetails(){
 
 
     let u1= new details(name,email,password);
-    console.log(u1.email)
-   if(checkemail(u1.email===true)){
+   if(checkemail(u1.email)===true){
     userdata.push(u1);
     localStorage.setItem("userdata",JSON.stringify(userdata));
     console.log(userdata)
+    
     alert("signup successfully");
+    window.location.href="index.html"
    }else{
     alert("account already exists");
    }

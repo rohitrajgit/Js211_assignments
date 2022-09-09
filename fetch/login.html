@@ -1,0 +1,65 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+</head>
+<body>
+    <form onsubmit="userdetails()" id="form">
+        <input type="text" placeholder="email" id="email">
+        <input type="password" placeholder="password" id="pasword">
+        <input type="submit">
+    </form>
+</body>
+</html>
+<script>
+let userdata=JSON.parse(localStorage.getItem("userdata"))||[];
+function userdetails(){
+    event.preventDefault();
+    let form=document.getElementById("form");
+
+    let data={
+        email:form.email.value,
+        password:form.pasword.value,
+
+    }
+
+    if(checkemail(data.email,data.password)===true){
+       
+        localStorage.setItem("userdata",JSON.stringify(data));
+        alert("login successfully");
+    }else{
+        alert("wrong password")
+    }
+   
+}
+
+
+function checkemail(email,password){
+    let filterd=userdata.filter((el)=>{
+        return email===el.email && password===el.password;
+    })
+
+    if(filterd.length>0){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

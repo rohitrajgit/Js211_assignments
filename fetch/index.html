@@ -1,0 +1,57 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <a href="login.html">login</a>
+    </div>
+    <form onsubmit="userdetails()" id="form">
+        <input type="text" placeholder="enter email" id="email">
+        <input type="text" placeholder="username" id="name">
+        <input type="password" placeholder="password" id="pasword">
+        <input type="submit">
+    </form>
+   
+    
+</body>
+</html>
+
+<script>
+let userdata=JSON.parse(localStorage.getItem("userdata"))||[];
+function userdetails(){
+    event.preventDefault();
+    let form=document.getElementById("form");
+
+    let data={
+        name:form.name.value,
+        email:form.email.value,
+        password:form.pasword.value,
+    }
+console.log(data)
+    if(checkemail(data.email)===true){
+        userdata.push(data);
+        localStorage.setItem("userdata",JSON.stringify(userdata));
+        alert("signup successfully");
+    }else{
+        alert("signup is already there");
+    }
+   
+}
+
+let checkemail=(email)=>{
+    let fileterd=userdata.filter((el)=>{
+        return email===el.email;
+    })
+
+    if(fileterd.length>0){
+        return false;
+    }else{
+        return true;
+    }
+}
+
+</script>

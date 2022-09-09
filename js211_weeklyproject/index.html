@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Homepage</title>
     <style>
 
         #navbar{
@@ -26,6 +26,26 @@
             background-color: #aecfed;
             border: transparent;
         }
+        #container{
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        #container>div>img{
+            width: 70%;
+           margin: auto;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            
+        }
+        #container>div{
+            width: 90%;
+            text-align: center;
+          
+           
+        }
         
     </style>
 </head>
@@ -40,15 +60,41 @@
         <a href="login.html">login</a>
     </div>
   </div>
+  <div id="container"></div>
 </body>
 </html>
 
 <script>
-   
+  let container=document.getElementById("container");
+  async function getdata(){
+    try{
+        let url="https://fakestoreapi.com/products?limit=20"
+        let res=await fetch(url);
+        let data=await res.json();
+        appendata(data)
+        console.log(data);
+    }catch(err){
+        console.log(err);
+    }
+  }
+
+getdata();
 
 
-
-
-
+let appendata=(data)=>{
+    data.forEach((el)=>{
+        let title=document.createElement("h2")
+        title.innerText=el.title;
+        let price=document.createElement("p")
+        price.innerText=el.price;
+        let image=document.createElement("img");
+        image.src=el.image;
+        let cat=document.createElement("p")
+        cat.innerText=el.category;
+        let div=document.createElement("div")
+        div.append(image,title,cat,price)
+        container.append(div);
+    })
+}
 
 </script>
