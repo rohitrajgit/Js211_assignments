@@ -1,0 +1,79 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="navbar">
+        <h3 id="patient">patient</h3>
+        <h3 id="vaccine">vaccine:10</h3>
+    </div>
+    <input type="text" placeholder="Name" id="name">
+    <input type="number" placeholder="age" id="age">
+    <button onclick="register()">submit</button>
+</body>
+</html>
+
+
+<script>
+let people=[];
+let vaccine_count=10;
+let register=()=>{
+    let name=document.getElementById("name").value;
+    let age=document.getElementById("age").value;
+    
+    let person={
+        name,
+        age,
+    }
+    let id;
+    let p=new Promise((res,rej)=>{
+        id=setInterval(()=>{
+        if(people[0].name===person.name){
+            res("its your turn")
+            clearInterval(id);
+        }
+    },2000)
+    })
+    p.then((res)=>{
+        alert(`${name} ${res}`)
+    })
+    p.catch((rej)=>{
+        alert("visit tommorow")
+    })
+    if(age>60){
+        people.unshift(person);
+    }else{
+        people.push(person)
+    }
+   
+    document.getElementById("patient").innerText=`patient:${people.length}`
+
+    console.log(people)
+  
+}
+let id;
+setInterval(()=>{
+    if(vaccine_count==0){
+        clearInterval(id);
+       alert("outof stock")
+      
+      
+    }
+    vaccine_count--;
+    document.getElementById("vaccine").innerText=`vaccine:${vaccine_count}`;
+    people.shift();
+},5000)
+
+
+
+
+
+
+
+
+
+
+</script>
