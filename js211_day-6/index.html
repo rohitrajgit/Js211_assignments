@@ -1,0 +1,145 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movieapp</title>
+    <style>
+        #navbar{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #1a242f;
+            color: aliceblue;
+
+        }
+        #navbar>div{
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 10px;
+           
+        }
+        #right input{
+            padding: 5px 20px;
+            background-color: #2557a7;
+            color: aliceblue;
+            font-size: medium;
+        }
+        #container{
+            margin-left: auto;
+            border: 1px solid black;
+            width: 270px;
+            background-color: #1a242f;
+            color: aliceblue;
+            padding: 10px;
+        }
+        #container>div p{
+            cursor: pointer;
+        }
+        #bottom{
+            display: flex;
+        
+        }
+        #bottom>div{
+            width: 200px;
+        }
+        #show{
+            margin: auto;
+            margin-top: 30px;
+        }
+        #show>div{
+            display: flex;
+            border: 1px solid red;
+            gap: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar">
+        <div id="left">
+            <h2>prime video</h2>
+            <p>Home</p>
+            <p>Store</p>
+            <p>Channel</p>
+            <p>Categories</p>
+            <p>Mystuff</p>
+        </div>
+        <div id="right">
+            <input type="text" placeholder="movie name" oninput="Search()" id="query">
+        </div>
+    </div>
+   <div id="bottom">
+    <div id="show"></div>
+    <div id="container"></div>
+   </div>
+   
+</body>
+</html>
+<script>
+let container=document.getElementById("container");
+async function Search(){
+    try{
+        let query=document.getElementById("query").value;
+        let url=`https://www.omdbapi.com/?apikey=a18d5312&s=${query}`
+
+        let res=await fetch(url);
+        let data=await res.json();
+        appendData(data.Search)
+        console.log(data.Search);
+    }catch(err){
+        console.log(err);
+    }
+}
+
+
+function appendData(data){
+    container.innerHTML=null;
+    data.forEach((el)=>{
+        let title=document.createElement("p")
+        title.innerText=el.Title;
+        let div=document.createElement("div")
+        div.addEventListener("click",function(){
+            showdata(el);
+        })
+        div.append(title)
+        container.append(div);
+    })
+}
+
+function showdata(data){
+    let storedata=JSON.parse(localStorage.getItem("storeData"))||[];
+    storedata.push(data);
+    localStorage.setItem("storeData",JSON.stringify(storedata));
+}
+let show=document.getElementById("show")
+
+function appendData2(){
+    show.innerHTML=null
+    let storedata=JSON.parse(localStorage.getItem("storeData"))||[];
+    storedata.forEach((el)=>{
+    let image=document.createElement("img")
+    image.src=el.Poster;
+    let title=document.createElement("p")
+    title.innerText=el.Title;
+    let year=document.createElement("p")
+    year.innerText=el.Year;
+    let div1=document.createElement("div")
+    div1.append(image)
+    let div2=document.createElement("div")
+    div2.append(title,year)
+    let div3=document.createElement("div")
+    div3.append(div1,div2)
+   
+    show.append(div3);
+    })
+      
+}
+appendData2();
+
+
+
+
+
+</script>
