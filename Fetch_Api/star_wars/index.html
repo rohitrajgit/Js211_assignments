@@ -1,0 +1,85 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STARWARS</title>
+    <style>
+        #main{
+            display: flex;
+            width: 200px;
+            margin: auto;
+            margin-top: 200px;
+            justify-content: center;
+            align-items: center;
+            
+        }
+        #main input{
+            text-align: center;
+            border-radius: 10px;
+            padding: 15px 150px;
+            background-color: #2d2f30;
+            color: aliceblue;
+            font-size: medium;
+        }
+        #container{
+            margin: auto;
+            width: 500px;
+            padding: 10px;
+            margin-bottom: 20px;
+            background-color: #2d2f30;
+            color: #ffeb00;
+            border-radius: 10px;   
+        }
+        #container p{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <input type="text" placeholder="Search" id="query" oninput="Search()">
+    </div>
+    <div id="container"></div>
+    
+</body>
+</html>
+
+<script>
+    let container=document.getElementById("container");
+    let Search=async ()=>{
+        try{
+            let query=document.getElementById("query").value;
+            let url=`https://swapi.dev/api/people/?search=${query}`
+
+            let res=await fetch(url);
+            let data=await res.json();
+            appendData(data.results);
+            console.log("data:",data.results);
+        }catch(err){
+            console.log(err);
+        }
+    }
+
+
+    let appendData=(data)=>{
+        container.innerHTML=null;
+        data.forEach((el)=>{
+            let name=document.createElement("p");
+            name.innerText=el.name;
+            let div=document.createElement("div")
+            div.addEventListener("click",function(){
+                infoitem(el);
+            })
+            div.append(name)
+            container.append(div);
+        })
+    }
+
+    let infoitem=(data)=>{
+       let storedata=JSON.parse(localStorage.getItem("storeData"))||[];
+       storedata.push(data);
+       localStorage.setItem("storeData",JSON.stringify(storedata));
+       console.log(storedata)
+    }
+</script>
