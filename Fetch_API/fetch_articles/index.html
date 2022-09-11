@@ -1,0 +1,65 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fetch_articles</title>
+</head>
+<body>
+    <button onclick="sortlh()">sortLh</button>
+    <div id="container"></div>
+</body>
+</html>
+
+<script>
+let container=document.getElementById("container")
+let url="https://jsonmock.hackerrank.com/api/articles";
+
+let fetch_array=[];
+for(var i=1;i<=5;i++){
+    let f= fetch(`${url}?page=${i}`).then((res)=>res.json())
+    fetch_array.push(f)
+}
+let all_data;
+async function getdata(){
+    try{
+        let data=await Promise.all(fetch_array)
+        
+         all_data=[];
+
+        for(let res of data){
+            all_data.push(...res.data);  
+        }
+       console.log(all_data)
+        appendData(all_data)
+    }catch(err){
+        console.log(err)
+    }
+}
+
+getdata();
+
+let appendData=(data)=>{
+    container.innerHTML=null
+    data.forEach((el)=>{
+        let title=document.createElement("h2")
+        title.innerText=el.title;
+        let author=document.createElement("p");
+        author.innerText=el.author;
+        let comment=document.createElement("p")
+        comment.innerText=el.num_comments;
+        let div =document.createElement("div");
+        div.append(title,author,comment);
+        container.append(div);
+    })
+}
+
+let sortlh=()=>{
+    let data=all_data.sort((a,b)=>{
+        return a.num_comments-b.num_comments;
+    })
+    appendData(data)
+    console.log(data)
+}
+</script>
