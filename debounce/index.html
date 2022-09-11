@@ -1,0 +1,61 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debouncing</title>
+</head>
+<body>
+    <input type="text" placeholder="movie" id="query" oninput="debounce(Search,1000)">
+    <div id="container"></div>
+</body>
+</html>
+<script>
+let container=document.getElementById("container")
+ async function Search(){
+    try{
+        let query=document.getElementById("query").value;
+        console.log(query)
+        let url=`https://www.omdbapi.com/?apikey=a18d5312&s=${query}`
+
+        let res= await fetch(url)
+        let data=await res.json();
+        appendData(data.Search);
+        console.log(data.Search);
+    }catch(err){
+        console.log(err);
+    }
+}
+
+function appendData(data){
+    container.innerHTML=null;
+    data.forEach((el)=>{
+        let image=document.createElement("img")
+        image.src=el.Poster;
+        let title=document.createElement("p")
+        title.innerText=el.Title;
+        let div=document.createElement("div")
+        div.append(image,title)
+        container.append(div);
+    })
+}
+
+let id;
+function debounce(func,delay){
+    if(id){
+        clearTimeout(id);
+    }
+    id=setTimeout(()=>{
+        func();
+    },delay)
+
+}
+
+
+
+
+
+
+
+
+</script>
