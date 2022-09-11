@@ -1,0 +1,63 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagination</title>
+</head>
+<body>
+    <div id="container"></div>
+    <div id="btn"></div>
+</body>
+</html>
+
+<script>
+
+let url="https://jsonplaceholder.typicode.com/comments"
+let data=[];
+let getdata= async ()=>{
+   let res=await fetch(url)
+   res=await res.json();
+   return res;
+}
+
+let main= async()=>{
+    data= await getdata();
+    rendorfunc(0)
+
+    showbuttton();
+}
+main();
+
+let rendorfunc=(index)=>{
+    let container=document.getElementById("container")
+    container.innerHTML=null;
+
+
+    let start=10*index;
+    let end=start+9;
+
+    let per_page_data=data.slice(start,end);
+
+    per_page_data.forEach(({id,name})=>{
+        let p=document.createElement("p")
+        p.innerText=`${id} ${name}`
+        container.append(p);
+    })
+}
+
+let showbuttton=()=>{
+    let btn=document.getElementById("btn")
+    btn.innerHTML=null;
+
+    let start=1;
+    for(var i=start;i<=start+9;i++){
+        let b=document.createElement("button")
+        b.innerText=i;
+        b.onclick=()=>{
+            rendorfunc(i-1)
+        }
+        btn.append(b);
+    }
+}
+</script>

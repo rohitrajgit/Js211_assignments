@@ -67,7 +67,7 @@
             <p>Mystuff</p>
         </div>
         <div id="right">
-            <input type="text" placeholder="movie name" oninput="Search()" id="query">
+            <input type="text" placeholder="movie name" oninput="debounce(Search,delay)" id="query">
         </div>
     </div>
    <div id="bottom">
@@ -92,6 +92,7 @@ async function Search(){
         console.log(err);
     }
 }
+
 
 
 function appendData(data){
