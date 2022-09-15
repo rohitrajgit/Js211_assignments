@@ -1,0 +1,176 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News_APP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Lobster&family=Roboto:wght@700&family=Ubuntu&display=swap" rel="stylesheet">
+    <style>
+        #container{
+            display: flex;
+            margin: auto;
+            width: 1200px;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        #left>div>img{
+            width: 90%;
+        }
+        #left>div{
+            margin-bottom: 10px;
+        }
+        #right>div{
+            border: 1px solid teal;
+            margin-bottom: 10px;
+            font-family:'Lobster', cursive;
+        }
+        #navbar{
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 20px;
+            background-color: antiquewhite;
+            padding: 10px;
+            background-color:#000438;
+        }
+        #navbar input{
+            padding: 5px;
+            border-radius: 5px;
+            border: transparent;
+
+        }
+        #navbar>button{
+            background-color:#4e7bb0;
+            color: whitesmoke;
+            padding: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: transparent;
+            font-size: medium;
+            font-family: 'Lobster', cursive;
+
+        }
+        h2{
+            font-family: 'Bungee Spice',sans-serif;
+        }
+        #btn{
+           display: flex;
+           justify-content: center;
+           align-items: center;
+           gap: 10px;
+        }
+
+    </style>
+</head>
+<body>
+   
+    <div id="navbar">
+        <button onclick="movie()" id="movie">Entertainment</button>
+        <button onclick="sport()" id="sport">Sports</button>
+        <button onclick="technologies()" id="tech">Technologies</button>
+        <input type="text" placeholder="Search" id="query">
+        <button onclick="Search()">search</button>
+    </div>
+    
+    <h2>New Headline</h2>
+    <div id="btn"></div>
+    <div id="container">
+        <div id="left"></div>
+        <div id="right"></div>
+    </div>
+</body>
+</html>
+<script>
+
+let api="bd8c7399e583458e968076ba6b602242"
+
+let new_data=[];
+
+
+let Search= async ()=>{
+    let query=document.getElementById("query").value;
+    let url=`https://newsapi.org/v2/everything?q=${query}&from=2022-08-15&sortBy=publishedAt&apiKey=${api}`
+
+    let res=await fetch(url);
+    let data=await res.json();
+    new_data=data.articles;
+    showData(0,new_data)
+    console.log(new_data)
+    showbuttons();
+   
+}
+
+function showData(index,data){
+    let left=document.getElementById("left")
+    let right=document.getElementById("right");
+    left.innerHTML=null;
+    right.innerHTML=null;
+
+    let start=10*index;
+    let end=start+9;
+
+    let per_page=data.slice(start,end);
+    per_page.forEach((el)=>{
+        let image=document.createElement("img")
+        image.src=el.urlToImage;
+        let title=document.createElement("h3")
+        title.innerText=el.title;
+        let content=document.createElement("p")
+        content.innerText=el.content
+        let div2=document.createElement("div")
+        div2.append(title,content);
+        right.append(div2);
+        let div1=document.createElement("div")
+        div1.append(image);
+        left.append(div1);
+    })
+}
+
+
+  function showbuttons(){
+    let btn=document.getElementById("btn")
+    btn.innerText=null
+    let start=1;
+    for(let i=start;i<=start+9;i++){
+        let b=document.createElement("button")
+        b.innerText=i;
+        b.onclick=()=>{
+            showData(i-1,new_data)
+        }
+        btn.append(b);
+    }
+  }
+  
+
+  async function movie(){
+    let m=document.getElementById("movie").innerText;
+    let url=`https://newsapi.org/v2/everything?q=${m}&from=2022-08-15&sortBy=publishedAt&apiKey=${api}`
+
+    let res=await fetch(url);
+    let data=await res.json();
+    console.log(data.articles)
+    showData(0,data.articles);
+  }
+
+async function sport(){
+    let s=document.getElementById("sport").innerText;
+    let url=`https://newsapi.org/v2/everything?q=${s}&from=2022-08-15&sortBy=publishedAt&apiKey=${api}`
+
+    let res=await fetch(url);
+    let data=await res.json();
+    console.log(data.articles)
+    showData(0,data.articles);
+}
+
+async function technologies(){
+    let tech=document.getElementById("tech").innerText;
+    let url=`https://newsapi.org/v2/everything?q=${tech}&from=2022-08-15&sortBy=publishedAt&apiKey=${api}`
+
+    let res=await fetch(url);
+    let data=await res.json();
+    console.log(data.articles)
+    showData(0,data.articles);
+}
+</script>
