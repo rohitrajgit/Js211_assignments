@@ -17,7 +17,56 @@ let url="https://jsonplaceholder.typicode.com/comments"
 let data=[];
 
 
-let getdata=()=>{
-    
+let getdata=async ()=>{
+    try{
+    let res=await fetch(url);
+    data=await res.json();
+    rendorDom(0)
+    showbuttons();
+    }catch(err){
+        console.log(err)
+    }
+   
 }
+
+getdata();
+
+
+function rendorDom(index){
+    let container=document.getElementById("container")
+    container.innerHTML=null
+
+    let start=10*index;
+    let end=start+9;
+
+    let per_page=data.slice(start,end);
+    per_page.forEach(({id,name})=>{
+        let p=document.createElement("p");
+        p.innerText=`${id} ${name}`;
+
+        container.append(p);
+    })
+    showbuttons(index+1)
+}
+
+function showbuttons(page){
+    let btn=document.getElementById("btn");
+    btn.innerHTML=null;
+    let start=1;
+    if(page>6){
+        start=page-1
+    }
+    for(let i=start;i<=start+9;i++){
+        let b=document.createElement("button")
+        b.innerText=i;
+        b.onclick=()=>{
+            rendorDom(i-1);
+        }
+        btn.append(b);
+    }
+}
+
+
+
+
 </script>
