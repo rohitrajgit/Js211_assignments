@@ -1,0 +1,93 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text"  id="task" placeholder="todo">
+    <button onclick="addtodo()">addtodo</button>
+    <div id="container"></div>
+</body>
+</html>
+
+<script>
+
+class Todo{
+    #todo;
+    constructor(){
+        this.#todo=[];
+    }
+
+    set addTodo(title){
+        let newitem={
+            title:title,
+            id: Date.now()+title,
+            status:false,
+        }
+
+        this.#todo.push(newitem)
+    }
+
+    get todos(){
+        return this.#todo;
+    }
+
+    deletTodo(id){
+        this.#todo=this.#todo.filter((todo)=> todo.id !== id);
+    }
+
+    toggleTodo(id){
+        this.#todo=this.#todo.map((todo)=>
+            todo.id===id ? {...todo,status: !todo.status} : todo
+        )
+    }
+}
+
+
+let todo=new Todo();
+
+let addtodo=()=>{
+    let task=document.getElementById("task").value;
+
+    todo.addTodo=task;
+    console.log(todo.todos);
+    rendorDom(todo.todos)
+}
+
+let rendorDom=(todos)=>{
+    let container=document.getElementById("container");
+    container.innerHTML=null;
+    todos.forEach(({id,status,title})=>{
+        let div=document.createElement("div")
+        let t=document.createElement("h3")
+        t.innerText=title;
+        let s=document.createElement("p")
+        s.innerText=status;
+        let deletitem=document.createElement("button")
+        deletitem.innerText="Delete";
+        deletitem.onclick=()=>{
+            todo.deletTodo(id)
+            rendorDom(todo.todos)
+        }
+
+        let toggle=document.createElement("button");
+        toggle.innerText="toggle";
+        toggle.onclick=()=>{
+            todo.toggleTodo(id)
+            rendorDom(todo.todos);
+        }
+        div.append(t,s,deletitem,toggle)
+        container.append(div);
+    })
+}
+
+
+
+
+
+
+
+
+</script>
