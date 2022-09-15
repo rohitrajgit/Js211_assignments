@@ -37,7 +37,7 @@ function rendorDom(index){
     container.innerHTML=null
 
     let start=10*index;
-    let end=start+9;
+    let end=start+19;
 
     let per_page=data.slice(start,end);
     per_page.forEach(({id,name})=>{
@@ -53,10 +53,10 @@ function showbuttons(page){
     let btn=document.getElementById("btn");
     btn.innerHTML=null;
     let start=1;
-    if(page>6){
+    if(page>3){
         start=page-1
     }
-    for(let i=start;i<=start+9;i++){
+    for(let i=start;i<=start+3;i++){
         let b=document.createElement("button")
         b.innerText=i;
         b.onclick=()=>{
