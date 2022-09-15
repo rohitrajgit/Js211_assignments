@@ -6,7 +6,8 @@
     <title>Push & pop</title>
 </head>
 <body>
-    
+    <input type="text" placeholder="enter_number" id="number">
+    <button onclick="Addnumber()">Add</button>
 </body>
 </html>
 
@@ -29,16 +30,14 @@ class Stack{
 }
 
 
-let s1 =new Stack();
-s1.push(1);
-s1.push(2);
-s1.push(3);
-s1.push(4);
-s1.push(5);
-console.log(s1);
-s1.pop();
-console.log(s1);
+let Addnumber=()=>{
+    
+    let number=document.getElementById("number").value;
 
+    let s1=new Stack();
+    s1.push(Number(number));
+    console.log(s1);
+}
 
 
 
