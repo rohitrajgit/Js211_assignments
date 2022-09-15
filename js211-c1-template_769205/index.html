@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <style>
+      #navbar{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+        background-color: #217867;
+      }
+      #navbar a{
+        color: whitesmoke;
+        font-weight: bolder;
+      }
+     #main{
+      width: 350px;
+      border: 1px solid teal;
+      margin: auto;
+      margin-top: 20px;
+      padding: 10px;
+     }
+     #main input{
+      margin-bottom: 8px;
+      padding: 5px;
+     }
+    </style>
+  </head>
+  <body>
+    <div id="navbar">
+      <div>
+        <a href="/">Home</a>
+      </div>
+      <div>
+        <a href="store.html">Store</a>
+      </div>
+    </div>
+
+    <div id="main">
+      <form onsubmit="Addproduct()">
+        <input type="text" placeholder="Brand_Name" id="brand">
+        <input type="text" placeholder="Product_Name" id="productname">
+        <input type="text" placeholder="price" id="price">
+        <input type="url" placeholder="Image_url" id="image">
+        <br>
+        <input type="submit">
+      </form>
+    </div>
+   
+  </body>
+</html>
+
+<script src="./scripts/index.js"></script>

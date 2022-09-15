@@ -31,7 +31,7 @@ function userdetails(){
         email:form.email.value,
         password:form.pasword.value,
     }
-console.log(data)
+    console.log(data)
     if(checkemail(data.email)===true){
         userdata.push(data);
         localStorage.setItem("userdata",JSON.stringify(userdata));
