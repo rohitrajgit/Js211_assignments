@@ -1,0 +1,169 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football_App</title>
+    <style>
+        #navbar{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 5px;
+            background-color: #000438;
+            color: aliceblue;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+        }
+        
+        #right{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+        #right input{
+            padding: 5px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+        #right button{
+            padding: 5px;
+            border-radius: 5px;
+            font-weight: bold;
+
+        }
+        #right select{
+            padding: 5px;
+            border-radius: 5px;
+        }
+        #container{
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 20px;
+            margin-top: 20px;
+            
+        }
+        #container>div{
+            text-align: center;
+            font-size: medium;
+            font-weight: bold;
+            box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+        }
+        #buttons{
+           display: flex;
+           justify-content: center;
+           gap: 20px;
+           margin-top: 30px;
+           margin-bottom: 20px;
+        }
+        #buttons button{
+            padding: 10px 40px;
+            border-radius: 5px;
+            font-size: medium;
+            font-weight: bolder;
+            background-color: #2557a7;
+            color: aliceblue;
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <div id="navbar">
+        <div>
+            <h1>FootBall-Match</h1>
+        </div>
+       <div id="right">
+        <input type="text" placeholder="Team1_Name" id="team1">
+        <input type="text" placeholder="Team2_Name" id="team2">
+        <select id="year">
+            <option value="2011">2011</option>
+            <option value="2012">2012</option>
+            <option value="2013">2013</option>
+            <option value="2014">2014</option>
+            <option value="2015">2015</option>
+        </select>
+        <button onclick="getdata()">Search</button>
+       </div> 
+    </div>
+    <div id="buttons">
+        <button onclick="previous()">Previous</button>
+        <button onclick="Next()">Next</button>
+    </div>
+    
+    <div id="container"></div>
+</body>
+</html>
+<script>
+
+let url="https://jsonmock.hackerrank.com/api/football_matches";
+
+
+let pageNo=1;
+let getdata=async (p)=>{
+    let team1=document.getElementById("team1").value;
+    let team2=document.getElementById("team2").value;
+    let year=document.getElementById("year").value;
+    console.log(team1,team2,year)
+
+    let res=await fetch(`${url}?page=${p}&year=${year}&team1=${team1}&team2=${team2}`)
+    let data=await res.json();
+    console.log("data:",data.data);
+    appendData(data.data);
+}
+
+getdata(pageNo);
+
+
+let appendData=(data)=>{
+    let container=document.getElementById("container")
+    container.innerHTML=null;
+
+    data.forEach((el)=>{
+        let com=document.createElement("h3")
+        com.innerText=el.competition;
+        let round=document.createElement("p");
+        round.innerText=`Round:-${el.round}`;
+        let team1=document.createElement("h4")
+        team1.innerText=el.team1;
+        let goals1=document.createElement("p");
+        goals1.innerText=`Goals:-${el.team1goals}`;
+        let team2=document.createElement("h4")
+        team2.innerText=el.team2;
+        let goals2=document.createElement("p")
+        goals2.innerText=`Goals:-${el.team2goals}`
+        let div=document.createElement("div");
+        div.append(com,round,team1,goals1,team2,goals2)
+        container.append(div);
+    })
+}
+
+let previous=()=>{
+    if(pageNo===1){
+        return;
+    }
+    pageNo--;
+    getdata(pageNo);
+}
+let Next=()=>{
+    if(pageNo>=3){
+        return;
+    }
+    pageNo++;
+    getdata(pageNo);
+}
+
+
+
+
+
+
+
+
+
+</script>

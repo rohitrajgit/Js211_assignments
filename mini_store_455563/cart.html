@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart</title>
+    <style>
+       #navbar{
+        display: flex;
+        border: 1px solid red;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+      }
+      #navbar>div{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+      }
+      #items{
+        display: grid;
+        grid-template-columns: repeat(4,1fr);
+        gap: 10px;
+        margin-top: 10px;
+      }  
+    </style>
+  </head>
+  <body>
+    <div id="navbar">
+      <div>
+        <a href="index.html">Home</a>
+      </div>
+      <div>
+        <a href="/">Cart</a>
+        <div id="count">0</div>
+      </div>
+      <!-- - The cart link Id :- "cart" -->
+      <!-- - Cart count div Id :- cart_count -->
+      <!-- - In cart count only number should be there, do not add any extra text -->
+    </div>
+    <div id="items">
+      <!-- - All the cart items will be appended inside div with id :- "items" -->
+      <!-- - Item card will have class :- "item" -->
+      <!-- - Remove button will have class :- "remove" -->
+    </div>
+    <hr />
+   <div>
+    <h3>***checkout***</h3>
+    <input type="text" placeholder="Enter_name" id="name">
+    <input type="text" placeholder="Address" id="adres">
+    <button onclick="checkout()">checkout</button>
+  
+   </div>
+  </body>
+</html>
+<script src="./scripts/cart.js"></script>
